@@ -23,4 +23,6 @@ token: "yV4kJUrzU1uZe8DgdAdx"
 
 });
 
-app.listen(3000, () => console.log("Serveur lancé"));
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log("Serveur lancé sur " + PORT));

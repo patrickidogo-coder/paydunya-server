@@ -7,10 +7,10 @@ app.post("/payer", (req, res) => {
 
 res.json({
 
-masterKey: "TA_CLE_PRINCIPALE",
-privateKey: "TA_CLE_PRIVEE_TEST",
-publicKey: "TA_CLE_PUBLIQUE_TEST",
-token: "TON_TOKEN_TEST",
+masterKey: "**************************",
+privateKey: "**************************",  
+publicKey: "**************************",
+token: "**************************",
 
 invoice: {
 total_amount: req.body.montant,

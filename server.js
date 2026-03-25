@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
+
 app.post("/payer", async (req, res) => {
 
 let montant = req.body.montant;
@@ -29,40 +30,56 @@ headers: {
 },
 
 body: JSON.stringify({
-  invoice: {
-    total_amount: montant,
-    description: "Commande nourriture"
-  },
-  store: {
-    name: "Délice-resto"
-  },
-  actions: {
-    cancel_url: "https://https://idogopatrick55-sys.github.io/annulation.html",
-    return_url: "https://https://idogopatrick55-sys.github.io/success.html"
-  }
+
+invoice: {
+total_amount: montant,
+description: "Commande nourriture"
+},
+
+store: {
+name: "Délice-resto"
+},
+
+actions: {
+
+cancel_url: "https://idogopatrick55-sys.github.io/annulation.html",
+
+return_url: "https://idogopatrick55-sys.github.io/success.html"
+
+}
+
 })
 
 });
 
 let data = await response.json();
-console.log("STATUS PAYDUNYA :", response.status);
-console.log("DETAILS PAYDUNYA :", data.details);
-if(data && data.response && data.response.checkout_url){
-  res.json({
-    url: data.response.checkout_url
-  });
-} else {
-  res.status(500).json({
-    error: "Erreur PayDunya",
-    details: data
-  });
-}
 
-} catch (e) {
+console.log("REPONSE PAYDUNYA :", data);
+
+if(data.response && data.response.checkout_url){
+
+res.json({
+
+url: data.response.checkout_url
+
+});
+
+}else{
 
 res.status(500).json({
 
-error: e.message
+error:"PayDunya error",
+details:data
+
+});
+
+}
+
+}catch(e){
+
+res.status(500).json({
+
+error:e.message
 
 });
 
@@ -70,4 +87,4 @@ error: e.message
 
 });
 
-app.listen(PORT, () => console.log("Serveur PayDunya actif"));
+app.listen(PORT, ()=>console.log("Serveur PayDunya actif"));

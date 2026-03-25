@@ -56,24 +56,26 @@ callback_url: "https://paydunya-server-gpg1.onrender.com/callback"
 
 let data = await response.json();
 
-console.log("REPONSE PAYDUNYA :", data);
+console.log("REPONSE PAYDUNYA COMPLETE :", data);
 
 if(data.response && data.response.checkout_url){
 
 res.json({
 
-url: data.response.checkout_url
+url:data.response.checkout_url
 
 });
 
 }else{
 
-res.status(500).json({
+res.json({
 
-error:"PayDunya error",
-details:data
+url:null,
+error:data
 
 });
+
+}
   app.get("/callback",(req,res)=>{
 
 console.log("Paiement confirmé");

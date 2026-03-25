@@ -46,7 +46,7 @@ body: JSON.stringify({
 
 let data = await response.json();
 console.log("STATUS PAYDUNYA :", response.status);
-console.log("REPONSE PAYDUNYA :", data);
+console.log("DETAILS PAYDUNYA :", data.details);
 if(data && data.response && data.response.checkout_url){
   res.json({
     url: data.response.checkout_url

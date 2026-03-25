@@ -41,7 +41,7 @@ description: "Commande nourriture"
 });
 
 let data = await response.json();
-
+console.log("REPONSE PAYDUNYA :",data);
 if(data && data.response && data.response.checkout_url){
   res.json({
     url: data.response.checkout_url

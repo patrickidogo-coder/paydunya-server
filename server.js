@@ -1,20 +1,63 @@
 const express = require("express");
 const cors = require("cors");
+const fetch = require("node-fetch");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.post("/payer", (req, res) => {
-   res.json({
-      masterKey: "O3SWgWMR-32y7-6Kfg-7eFc-sXKbOrVCjHRi",
-      privateKey: "test_private_n5li0sOB70LWXPuckEhWmV091qq",
-      publicKey: "test_public_LMrF05p8PN53QZX63SZFBgNDdJt",
-      token: "yV4kJUrzU1uZe8DgdAdx"
-   });
+app.post("/payer", async (req, res) => {
+
+let montant = req.body.montant;
+
+try {
+
+let response = await fetch("https://app.paydunya.com/api/v1/checkout-invoice/create", {
+
+method: "POST",
+
+headers: {
+
+"Content-Type": "application/json",
+
+"PAYDUNYA-MASTER-KEY": "O3SWgWMR-32y7-6Kfg-7eFc-sXKbOrVCjHRi",
+"PAYDUNYA-PRIVATE-KEY": "test_private_n5li0sOB70LWXPuckEhWmV091qq",
+"PAYDUNYA-TOKEN": "yV4kJUrzU1uZe8DgdAdx"
+
+},
+
+body: JSON.stringify({
+
+invoice: {
+
+total_amount: montant,
+description: "Commande nourriture"
+
+}
+
+})
+
 });
 
-const PORT = process.env.PORT || 3000;
+let data = await response.json();
 
-app.listen(PORT, () => console.log("Serveur lancé sur " + PORT));
+res.json({
+
+url: data.response.checkout_url
+
+});
+
+} catch (e) {
+
+res.status(500).json({
+
+error: e.message
+
+});
+
+}
+
+});
+
+app.listen(3000, () => console.log("Serveur PayDunya actif"));

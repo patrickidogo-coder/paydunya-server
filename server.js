@@ -42,11 +42,16 @@ description: "Commande nourriture"
 
 let data = await response.json();
 
-res.json({
-
-url: data.response.checkout_url
-
-});
+if(data && data.response && data.response.checkout_url){
+  res.json({
+    url: data.response.checkout_url
+  });
+} else {
+  res.status(500).json({
+    error: "Erreur PayDunya",
+    details: data
+  });
+}
 
 } catch (e) {
 

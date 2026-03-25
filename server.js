@@ -37,16 +37,14 @@ description: "Commande nourriture"
 },
 
 store: {
-name: "Délice-resto"
+name: "Delice-resto"
 },
 
 actions: {
 
 cancel_url: "https://idogopatrick55-sys.github.io/annulation.html",
 
-return_url: "https://idogopatrick55-sys.github.io/success.html",
-
-callback_url: "https://paydunya-server-gpg1.onrender.com/callback"
+return_url: "https://idogopatrick55-sys.github.io/success.html"
 
 }
 
@@ -56,46 +54,38 @@ callback_url: "https://paydunya-server-gpg1.onrender.com/callback"
 
 let data = await response.json();
 
-console.log("REPONSE PAYDUNYA COMPLETE :", data);
+console.log("REPONSE PAYDUNYA :", data);
 
 if(data.response && data.response.checkout_url){
 
 res.json({
-
-url:data.response.checkout_url
-
+url: data.response.checkout_url
 });
 
 }else{
 
-res.json({
-
-url:null,
-error:data
-
-});
-
-}
-  app.get("/callback",(req,res)=>{
-
-console.log("Paiement confirmé");
-
-res.send("OK");
-
+res.status(500).json({
+error: data
 });
 
 }
 
-}catch(e){
+} catch(error){
+
+console.log("ERREUR SERVEUR :", error);
 
 res.status(500).json({
-
-error:e.message
-
+error: error.message
 });
 
 }
 
 });
 
-app.listen(PORT, ()=>console.log("Serveur PayDunya actif"));
+app.get("/", (req,res)=>{
+
+res.send("Serveur PayDunya actif");
+
+});
+
+app.listen(PORT, ()=>console.log("Serveur PayDunya actif sur port "+PORT));

@@ -7,6 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const PORT = process.env.PORT || 3000;
 app.post("/payer", async (req, res) => {
 
 let montant = req.body.montant;
@@ -28,14 +29,17 @@ headers: {
 },
 
 body: JSON.stringify({
-
-invoice: {
-
-total_amount: montant,
-description: "Commande nourriture"
-
-}
-
+  invoice: {
+    total_amount: montant,
+    description: "Commande nourriture"
+  },
+  store: {
+    name: "Délice-resto"
+  },
+  actions: {
+    cancel_url: "https://https://idogopatrick55-sys.github.io/annulation.html",
+    return_url: "https://https://idogopatrick55-sys.github.io/success.html"
+  }
 })
 
 });
@@ -66,4 +70,4 @@ error: e.message
 
 });
 
-app.listen(3000, () => console.log("Serveur PayDunya actif"));
+app.listen(PORT, () => console.log("Serveur PayDunya actif"));

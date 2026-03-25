@@ -74,6 +74,13 @@ error:"PayDunya error",
 details:data
 
 });
+  app.get("/callback",(req,res)=>{
+
+console.log("Paiement confirmé");
+
+res.send("OK");
+
+});
 
 }
 

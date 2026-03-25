@@ -44,7 +44,9 @@ actions: {
 
 cancel_url: "https://idogopatrick55-sys.github.io/annulation.html",
 
-return_url: "https://idogopatrick55-sys.github.io/success.html"
+return_url: "https://idogopatrick55-sys.github.io/success.html",
+
+callback_url: "https://paydunya-server-gpg1.onrender.com/callback"
 
 }
 
